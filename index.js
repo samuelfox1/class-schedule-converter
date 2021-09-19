@@ -1,4 +1,5 @@
 console.clear()
+
 const string = `| Start  | #   | Activity Name                       | Duration |
 | ------ | --- | ----------------------------------- | -------- |
 | 6:30PM | 1   | Instructor Do: Stoke Curiosity      | 0:10     |
@@ -20,6 +21,15 @@ const string = `| Start  | #   | Activity Name                       | Duration 
 | 9:15PM | 17  | Instructor Review: Event Delegation | 0:15     |
 | 9:30PM | 18  | END                                 | 0:00     |
 `
+const config = {
+    startingHour: '10',
+    startingMinute: '30',
+    startingAmPm: 'AM',
+    adjustStudentDo: 0,
+    breakTime: 40
+}
+
+
 const arrayOfLines = string.split('\n')
 
 const sanitizeArray = arrayOfLines.map(line => line.trim()).filter(value => value !== '')
@@ -29,65 +39,100 @@ const matrix = sanitizeArray.map(line => line.split('|'))
 const newMatrix = []
 
 const convertStartTime = (hourStr, minuteStr, ampmStr) => {
-    let trackNewHour = parseInt(hourStr)
+    let trackStartingHour = parseInt(hourStr)
     // track the hour the schedule starts at
     let trackExistingHour
     // track the minutes depending on activity Duration
-    let trackMinutes = minuteStr
+    let trackStartingMinutes = parseInt(minuteStr)
 
     const updateScheduleTime = (currentTime) => {
-        const hourString = `${trackNewHour}`
-        currentTime[0] = hourString.length === 1 ? `0${trackNewHour}` : trackNewHour
-        currentTime[1] = trackMinutes
+        const hourString = `${trackStartingHour}`
+        const minuteString = `${trackStartingMinutes}`
+        currentTime[0] = hourString.length === 1 ? `0${trackStartingHour}` : trackStartingHour
+        currentTime[1] = minuteString.length === 1 ? `0${trackStartingMinutes}` : trackStartingMinutes
+
+
         return ` ${currentTime.join(':')}${ampmStr} `
     }
 
-    const toggleAmPm = () => ampmStr = ampmStr === 'AM' ? 'PM' : 'AM'
-    const resetHourCount = () => trackNewHour = 1
+    const toggleAmPm = () => ampmStr = ampmStr.toUpperCase() === 'AM' ? 'PM' : 'AM'
+    const resetHourCount = () => trackStartingHour = 1
 
     const incrementHours = () => {
         trackExistingHour++
-        trackNewHour++
+        trackStartingHour++
+        trackStartingHour === 12 && toggleAmPm()
+        trackStartingHour === 13 && resetHourCount()
+    }
 
-        trackNewHour === 12 && toggleAmPm()
-        trackNewHour === 13 && resetHourCount()
+    const modifyDurationIfNeeded = (activity, duration) => {
+        let newDuration = duration
+        console.log(activity)
+        if (activity.toUpperCase() === 'BREAK') newDuration = config.breakTime
+        return newDuration
+    }
+
+    const setStartTimeForNextActivity = (duration) => {
+        trackStartingMinutes = trackStartingMinutes + duration
+        if (trackStartingMinutes >= 60) {
+            incrementHours()
+            trackStartingMinutes = trackStartingMinutes - 60
+        }
     }
 
 
     for (let i = 0; i < matrix.length; i++) {
         // target the array representing the current line in the schedule
         const currentLineArr = matrix[i]
-        // console.log(currentLineArr)
 
-        // remove white space and split the time bewteen hour & minute
+        // target the Start time, remove white space and split the time bewteen hour & minute
         const currentLinesTimeArr = currentLineArr[1].trim().split(':')
-        const currentLinesDurationArr = currentLineArr[4].trim().split(':')
-        console.log(currentLinesDurationArr)
         const linesExistingHour = currentLinesTimeArr[0]
 
-        // find the existing start time and store it
+        // skip the lines that arent time related
         const isANumber = parseInt(linesExistingHour)
+        if (!isANumber) continue
+
+        // save the existing number when it is found
         if (!trackExistingHour && isANumber) trackExistingHour = isANumber
+
 
         // handle updating the tracked hour & converting the schedle hour
         if (trackExistingHour && isANumber) {
-            if (trackExistingHour != isANumber) incrementHours()
+            // if (trackExistingHour != isANumber) incrementHours()
             // target expected index position to modify time
             currentLineArr[1] = updateScheduleTime(currentLinesTimeArr)
         }
 
-        //handle 
+
+        // target activity to determin duration and apply modifications if needed
+        const activity = currentLineArr[3].trim()
+
+        // target the duration for this activity
+        const duration = parseInt(currentLineArr[4].trim().split(':')[1])
+        const updatedDuration = modifyDurationIfNeeded(activity, duration)
+        console.log(duration, updatedDuration)
+        setStartTimeForNextActivity(updatedDuration)
+
+
+
+
+
 
 
         // re-assemble the line
         currentLineArr.join('|')
 
-
     }
 
 }
 
-convertStartTime('10', '00', 'AM')
-const updated = matrix.map(arr => arr.join('|'))
-console.log(string)
-console.log('\n\n', updated.join('\n'))
+const { startingHour, startingMinute, startingAmPm } = config
+convertStartTime(startingHour, startingMinute, startingAmPm)
+
+const reassembleSchedule = () => {
+    const updated = matrix.map(arr => arr.join('|'))
+    return updated.join('\n')
+}
+console.log('input:\n', string)
+console.log('\n\noutput:\n', reassembleSchedule())
