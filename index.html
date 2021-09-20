@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./assets/style.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Schedule Converter</h1>
+    <main>
+        <div>
+            <h2>input: </h2>
+            <textarea id="schedule-input"></textarea>
+        </div>
+        <div>
+            <h3>Adjustments</h3>
+            <form>
+                <div>
+                    <div class="form-input">
+                        <label for="start-time">start time</label>
+                        <input type="time" name="start-time">
+                    </div>
+
+                    <div class="form-input">
+                        <p>break time</p>
+                        <div id="form-input-radio">
+                            <div>
+                                <label for="break-15">15 mins</label>
+                                <input type="radio" name="break-length" value="15" id="break-15" checked>
+                            </div>
+                            <div>
+                                <label for="break-40">40 mins</label>
+                                <input type="radio" name="break-length" value="40" id="break-40">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-input">
+                        <label for="activity">student do</label>
+                        <input class="activity-length" type="number" name="activity" id="student-do" value="5">
+                    </div>
+                    <div class="form-input">
+                        <label for="activity">instructor review</label>
+                        <input class="activity-length" type="number" name="activity" id="instructor-review" value="5">
+                    </div>
+                </div>
+
+                <input type="submit" value="convert">
+            </form>
+        </div>
+        <div>
+            <h2>output: </h2>
+            <textarea id="schedule-output"></textarea>
+        </div>
+    </main>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"
+        integrity="sha512-WFN04846sdKMIP5LKNphMaWzU7YpMyCU245etK3g/2ARYbPK9Ub18eG+ljU96qKRCWh+quCY7yefSmlkQw1ANQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="./assets/index.js"></script>
+</body>
+
+</html>
