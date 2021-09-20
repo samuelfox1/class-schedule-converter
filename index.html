@@ -12,8 +12,9 @@
 <body>
     <h1>Schedule Converter</h1>
     <main>
-        <div>
-            <h2>input: </h2>
+        <div id="textarea-container">
+            <h2>input:</h2>
+            <button id="clear-input-btn">clear</button>
             <textarea id="schedule-input"></textarea>
         </div>
         <div>
@@ -30,11 +31,11 @@
                         <div id="form-input-radio">
                             <div>
                                 <label for="break-15">15 mins</label>
-                                <input type="radio" name="break-length" value="15" id="break-15" checked>
+                                <input type="radio" name="break-length" value="15" id="break-15">
                             </div>
                             <div>
                                 <label for="break-40">40 mins</label>
-                                <input type="radio" name="break-length" value="40" id="break-40">
+                                <input type="radio" name="break-length" value="40" id="break-40" checked>
                             </div>
                         </div>
                     </div>
@@ -45,15 +46,16 @@
                     </div>
                     <div class="form-input">
                         <label for="activity">instructor review</label>
-                        <input class="activity-length" type="number" name="activity" id="instructor-review" value="5">
+                        <input class="activity-length" type="number" name="activity" id="instructor-review" value="2">
                     </div>
                 </div>
 
-                <input type="submit" value="convert">
+                <input id="convert-btn" type="submit" value="convert">
             </form>
         </div>
-        <div>
-            <h2>output: </h2>
+        <div id="textarea-container">
+            <h2 id="output-h2">output: </h2>
+            <button id="copy-output-btn">copy</button>
             <textarea id="schedule-output"></textarea>
         </div>
     </main>
