@@ -21,14 +21,25 @@ textarea {
     font-size: 12px;
     resize: none
 }
+#textarea-container {
+    position:relative;
+}
+#textarea-container button {
+    position:absolute;
+    bottom:10px;
+    right: 5px;
+}
 form {
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    margin-bottom: 5px;
     height: 200px;
     width: 200px;
     padding: 1em;
     border: solid rgba(0, 0, 0, 0.404) 1px;
+    border-radius: 3px;
 }
 form div .form-input {
     display: flex;
@@ -37,7 +48,6 @@ form div .form-input {
 form p {
     margin: 0 0;
 }
-
 .form-input {
     display: flex;
     /* flex-direction: column; */
@@ -49,7 +59,11 @@ form p {
     flex-direction: column;
     /* width: 100%; */
 }
-
+#convert-btn {
+    position:absolute;
+    bottom:5px;
+    right: 5px;
+}
 .activity-length {
     width: 35px;
     /* height: 25px; */
