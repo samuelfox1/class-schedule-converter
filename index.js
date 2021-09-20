@@ -1,6 +1,8 @@
+import camelCase from 'lodash.camelcase'
 console.clear()
 
-const string = `| Start  | #   | Activity Name                       | Duration |
+const string = `
+| Start  | #   | Activity Name                       | Duration |
 | ------ | --- | ----------------------------------- | -------- |
 | 6:30PM | 1   | Instructor Do: Stoke Curiosity      | 0:10     |
 | 6:40PM | 2   | Instructor Demo: jQuery Elements    | 0:05     |
@@ -22,11 +24,14 @@ const string = `| Start  | #   | Activity Name                       | Duration 
 | 9:30PM | 18  | END                                 | 0:00     |
 `
 const config = {
-    startingHour: '10',
+    startingHour: '9',
     startingMinute: '30',
     startingAmPm: 'AM',
-    adjustStudentDo: 0,
-    breakTime: 40
+    adjustTime: {
+        studentDo: 5,
+        instructorReview: 0,
+        break: 40
+    },
 }
 
 
@@ -35,8 +40,8 @@ const arrayOfLines = string.split('\n')
 const sanitizeArray = arrayOfLines.map(line => line.trim()).filter(value => value !== '')
 
 const matrix = sanitizeArray.map(line => line.split('|'))
+// console.log(matrix)
 
-const newMatrix = []
 
 const convertStartTime = (hourStr, minuteStr, ampmStr) => {
     let trackStartingHour = parseInt(hourStr)
@@ -66,10 +71,13 @@ const convertStartTime = (hourStr, minuteStr, ampmStr) => {
     }
 
     const modifyDurationIfNeeded = (activity, duration) => {
-        let newDuration = duration
-        console.log(activity)
-        if (activity.toUpperCase() === 'BREAK') newDuration = config.breakTime
-        return newDuration
+        const formattedActivity = camelCase(activity)
+        const timeAdjustment = config.adjustTime[formattedActivity]
+        return timeAdjustment
+            ? formattedActivity === 'break'
+                ? timeAdjustment
+                : duration + timeAdjustment
+            : duration
     }
 
     const setStartTimeForNextActivity = (duration) => {
@@ -78,6 +86,11 @@ const convertStartTime = (hourStr, minuteStr, ampmStr) => {
             incrementHours()
             trackStartingMinutes = trackStartingMinutes - 60
         }
+    }
+
+    const formatDuration = (duration) => {
+        const numberToString = `${duration}`
+        return numberToString.length > 1 ? numberToString : `0${numberToString}`
     }
 
 
@@ -90,35 +103,26 @@ const convertStartTime = (hourStr, minuteStr, ampmStr) => {
         const linesExistingHour = currentLinesTimeArr[0]
 
         // skip the lines that arent time related
-        const isANumber = parseInt(linesExistingHour)
-        if (!isANumber) continue
+        const isAnHour = parseInt(linesExistingHour)
+        if (!isAnHour) continue
 
         // save the existing number when it is found
-        if (!trackExistingHour && isANumber) trackExistingHour = isANumber
+        if (!trackExistingHour && isAnHour) trackExistingHour = isAnHour
 
 
-        // handle updating the tracked hour & converting the schedle hour
-        if (trackExistingHour && isANumber) {
-            // if (trackExistingHour != isANumber) incrementHours()
-            // target expected index position to modify time
-            currentLineArr[1] = updateScheduleTime(currentLinesTimeArr)
-        }
+        // target expected index position to modify time
+        if (trackExistingHour && isAnHour) currentLineArr[1] = updateScheduleTime(currentLinesTimeArr)
 
 
         // target activity to determin duration and apply modifications if needed
-        const activity = currentLineArr[3].trim()
+        const activity = currentLineArr[3].trim().split(':')[0]
 
-        // target the duration for this activity
-        const duration = parseInt(currentLineArr[4].trim().split(':')[1])
-        const updatedDuration = modifyDurationIfNeeded(activity, duration)
-        console.log(duration, updatedDuration)
+        // target the duration for this activity and check for updates
+        const currentDuration = parseInt(currentLineArr[4].trim().split(':')[1])
+        const updatedDuration = modifyDurationIfNeeded(activity, currentDuration)
+
         setStartTimeForNextActivity(updatedDuration)
-
-
-
-
-
-
+        currentLineArr[4] = ` ${formatDuration(updatedDuration)}       `
 
         // re-assemble the line
         currentLineArr.join('|')
@@ -131,7 +135,10 @@ const { startingHour, startingMinute, startingAmPm } = config
 convertStartTime(startingHour, startingMinute, startingAmPm)
 
 const reassembleSchedule = () => {
-    const updated = matrix.map(arr => arr.join('|'))
+    // adjust table formatting
+    matrix[1][1] = ' ------- '
+    matrix[1][4] = ' -------  '
+    const updated = matrix.map(arr => arr.join('|').trim())
     return updated.join('\n')
 }
 console.log('input:\n', string)
