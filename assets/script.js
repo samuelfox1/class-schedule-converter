@@ -5,6 +5,9 @@ const timeInputEl = $('input[type=time]')
 const scheduleOutputEl = $('#schedule-output')
 const copyOutputBtn = $('#copy-output-btn')
 
+const docTitle = $('title')
+console.log(docTitle.text())
+
 const buildNewMatrix = (string) => {
     const arrayOfLines = string.split('\n')
     const sanitizeArray = arrayOfLines.map(line => line.trim()).filter(value => value !== '')
@@ -192,5 +195,6 @@ const init = () => {
 `
     scheduleInputEl.text(exampleString.trim());
     timeInputEl.val('10:00');
+    $('h1').text(docTitle.text())
 }
 init()
