@@ -1,0 +1,22 @@
+{
+  "name": "lesson-schedule-converter",
+  "version": "1.0.0",
+  "description": "convert the start time and modify activity duration for a class schedule formatted as a markdown table  ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/samuelfox1/schedule-updater.git"
+  },
+  "author": "samuel fox",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/samuelfox1/schedule-updater/issues"
+  },
+  "homepage": "https://github.com/samuelfox1/schedule-updater#readme",
+  "dependencies": {
+    "lodash.camelcase": "^4.3.0"
+  }
+}
