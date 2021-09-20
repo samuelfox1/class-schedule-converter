@@ -6,7 +6,6 @@ const scheduleOutputEl = $('#schedule-output')
 const copyOutputBtn = $('#copy-output-btn')
 
 const docTitle = $('title')
-console.log(docTitle.text())
 
 const buildNewMatrix = (string) => {
     const arrayOfLines = string.split('\n')
@@ -172,27 +171,28 @@ copyOutputBtn.click(copyToClipboard)
 
 const init = () => {
     const exampleString = `
-| Start  | #   | Activity Name                       | Duration |
-| ------ | --- | ----------------------------------- | -------- |
-| 6:30PM | 1   | Instructor Do: Stoke Curiosity      | 0:10     |
-| 6:40PM | 2   | Instructor Demo: jQuery Elements    | 0:05     |
-| 6:45PM | 3   | Student Do: jQuery Elements         | 0:15     |
-| 7:00PM | 4   | Instructor Review: jQuery Elements  | 0:10     |
-| 7:10PM | 5   | Instructor Demo: Click Events       | 0:05     |
-| 7:15PM | 6   | Student Do: Click Events            | 0:15     |
-| 7:30PM | 7   | Instructor Review: Click Events     | 0:10     |
-| 7:40PM | 8   | Instructor Demo: Form Elements      | 0:05     |
-| 7:45PM | 9   | Student Do: Form Elements           | 0:15     |
-| 8:00PM | 10  | BREAK                               | 0:15     |
-| 8:15PM | 11  | Instructor Review: Form Elements    | 0:10     |
-| 8:25PM | 12  | Instructor Demo: DOM Traversal      | 0:05     |
-| 8:30PM | 13  | Student Do: DOM Traversal           | 0:15     |
-| 8:45PM | 14  | Instructor Review: DOM Traversal    | 0:10     |
-| 8:55PM | 15  | Instructor Demo: Event Delegation   | 0:05     |
-| 9:00PM | 16  | Student Do: Event Delegation        | 0:15     |
-| 9:15PM | 17  | Instructor Review: Event Delegation | 0:15     |
-| 9:30PM | 18  | END                                 | 0:00     |
+| Start  | #   | Activity Name                     | Duration |
+| ------ | --- | --------------------------------- | -------- |
+| 6:30PM | 1   | Instructor Do: Stoke Curiosity    | 0:10     |
+| 6:40PM | 2   | Instructor Demo: HTML             | 0:05     |
+| 6:45PM | 3   | Student Do: HTML                  | 0:15     |
+| 7:00PM | 4   | Instructor Review: HTML           | 0:10     |
+| 7:10PM | 5   | Instructor Demo: Attributes       | 0:05     |
+| 7:15PM | 6   | Student Do: Attributes            | 0:15     |
+| 7:30PM | 7   | Instructor Review: Attributes     | 0:10     |
+| 7:40PM | 8   | Instructor Demo: Color            | 0:05     |
+| 7:45PM | 9   | Student Do: Color                 | 0:15     |
+| 8:00PM | 10  | BREAK                             | 0:15     |
+| 8:15PM | 11  | Instructor Review: Color          | 0:10     |
+| 8:25PM | 12  | Instructor Demo: Units and Font   | 0:05     |
+| 8:30PM | 13  | Student Do: Units and Font        | 0:15     |
+| 8:45PM | 14  | Instructor Review: Units and Font | 0:10     |
+| 8:55PM | 15  | Instructor Demo: Selectors        | 0:05     |
+| 9:00PM | 16  | Student Do: Selectors             | 0:15     |
+| 9:15PM | 17  | Instructor Review: Selectors      | 0:15     |
+| 9:30PM | 18  | END                               | 0:00     |
 `
+
     scheduleInputEl.text(exampleString.trim());
     timeInputEl.val('10:00');
     $('h1').text(docTitle.text())
