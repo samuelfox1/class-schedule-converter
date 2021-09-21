@@ -35,7 +35,7 @@ form {
     flex-direction: column;
     justify-content: space-between;
     margin-bottom: 5px;
-    height: 200px;
+    height: 210px;
     width: 200px;
     padding: 1em;
     border: solid rgba(0, 0, 0, 0.404) 1px;
@@ -44,6 +44,9 @@ form {
 form div .form-input {
     display: flex;
     justify-content: space-between;
+}
+small{
+    font-size: 10px;
 }
 form p {
     margin: 0 0;
