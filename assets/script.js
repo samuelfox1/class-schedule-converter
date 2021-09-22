@@ -193,7 +193,7 @@ const init = () => {
 | 9:30PM | 18  | END                               | 0:00     |
 `
 
-    scheduleInputEl.text(exampleString.trim());
+    scheduleInputEl.val(exampleString.trim());
     timeInputEl.val('10:00');
     $('h1').text(docTitle.text())
 }
