@@ -5,59 +5,41 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
     <link rel="stylesheet" href="./assets/style.css">
     <title>Class Schedule Converter</title>
 </head>
 
-<body>
-    <h1></h1>
-    <main>
-        <div id="textarea-container">
-            <h2>input:</h2>
-            <button id="clear-input-btn">clear</button>
-            <textarea id="schedule-input"></textarea>
-        </div>
-        <div>
-            <h3>Adjustments</h3>
-            <form>
-                <div>
-                    <div class="form-input">
-                        <label for="start-time">start time</label>
-                        <input type="time" name="start-time">
-                    </div>
+<body class="vh-100 mx-5 my-0">
+    <main class="h-100 container-fluid">
 
-                    <div class="form-input">
-                        <p>break time</p>
-                        <div id="form-input-radio">
-                            <div>
-                                <label for="break-15">15 mins</label>
-                                <input type="radio" name="break-length" value="15" id="break-15">
-                            </div>
-                            <div>
-                                <label for="break-40">40 mins</label>
-                                <input type="radio" name="break-length" value="40" id="break-40" checked>
-                            </div>
-                        </div>
-                    </div>
-                    <p>+/- current duration</p>
-                    <hr />
-                    <div class="form-input">
-                        <label for="activity">student do:</label>
-                        <input class="activity-length" type="number" name="activity" id="student-do" value="5">
-                    </div>
-                    <div class="form-input">
-                        <label for="activity">instructor review:</label>
-                        <input class="activity-length" type="number" name="activity" id="instructor-review" value="2">
-                    </div>
-                </div>
+        <h1 class="text-end border-bottom my-4"></h1>
+        <form class="d-flex justify-content-end">
+            <select class=" d-flexform-select me-3 p-2" aria-label="Default select example">
+                <option value="weekday">Weekday</option>
+                <option value="saturday" selected>Saturday</option>
+            </select>
+            <button type="submit" class="btn btn-info">Convert</button>
+        </form>
 
-                <input id="convert-btn" type="submit" value="convert">
-            </form>
-        </div>
-        <div id="textarea-container">
-            <h2 id="output-h2">output: </h2>
-            <button id="copy-output-btn">copy</button>
-            <textarea id="schedule-output"></textarea>
+        <div class="row d-flex justify-content-evenly align-items-center">
+
+            <div class="col-lg-6 col-md-12 position-relative">
+                <label class="form-label" for="schedule-input">input:(example)</label>
+                <button class="btn btn-warning position-absolute bottom-0 end-0 me-3 mb-1"
+                    id="clear-input-btn">Clear</button>
+                <textarea class="form-control font-monospace overflow-auto" id="schedule-input"
+                    aria-label="With textarea"></textarea>
+            </div>
+
+            <div class="col-lg-6 col-md-12 position-relative">
+                <label class="form-label" for="schedule-output">output:</label>
+                <button class="btn btn-success position-absolute bottom-0 end-0 me-3 mb-1" id="copy-output-btn"
+                    disabled>Copy</button>
+                <textarea class="form-control font-monospace overflow-auto" id="schedule-output"
+                    aria-label="With textarea" disabled></textarea>
+            </div>
         </div>
     </main>
 
