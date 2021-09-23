@@ -30,4 +30,6 @@
 2. Select Weekday or Saturday & click Convert.
 3. Verify the updated times are correct and enjoy.
 
--- Thanks!
+check it out [here!](https://samuelfox1.github.io/class-schedule-converter/)
+
+_Thanks!
