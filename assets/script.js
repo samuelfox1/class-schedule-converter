@@ -2,7 +2,7 @@ const scheduleInputEl = $('#schedule-input')
 const clearInputBtn = $('#clear-input-btn')
 const formEl = $('form')
 const selectEl = $('select')
-// const timeInputEl = $('input[type=time]')
+const inputContainerEl = $('#input-container')
 const scheduleOutputEl = $('#schedule-output')
 const copyOutputBtn = $('#copy-output-btn')
 const docTitle = $('title')
@@ -168,7 +168,7 @@ const copyToClipboard = async () => {
     }
 }
 
-scheduleInputEl.on('click', () => $('label[for=schedule-input]').text('input:'))
+inputContainerEl.on('click', () => $('label[for=schedule-input]').text('input:'))
 formEl.on('submit', handleConvertSchedule)
 clearInputBtn.click(clearInputText)
 copyOutputBtn.click(copyToClipboard)
