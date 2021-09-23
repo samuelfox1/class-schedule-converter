@@ -1,6 +1,7 @@
 textarea {
-    height: 400px;
+    height: 450px;
     font-size: 12px !important;
+    padding: 0 0 !important;
     resize: none;
     /* turn off text wrapping to maintain formatting */
     white-space: nowrap;  
