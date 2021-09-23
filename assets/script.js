@@ -1,10 +1,10 @@
 const scheduleInputEl = $('#schedule-input')
 const clearInputBtn = $('#clear-input-btn')
 const formEl = $('form')
-const timeInputEl = $('input[type=time]')
+const selectEl = $('select')
+// const timeInputEl = $('input[type=time]')
 const scheduleOutputEl = $('#schedule-output')
 const copyOutputBtn = $('#copy-output-btn')
-
 const docTitle = $('title')
 
 const buildNewMatrix = (string) => {
@@ -14,13 +14,12 @@ const buildNewMatrix = (string) => {
     return matrix
 }
 
-// const convertStartTime = (hourStr, minuteStr, ampmStr) => {
 const convertStartTime = (string, config) => {
     const matrix = buildNewMatrix(string)
     let ampmStr = config.startingAmPm
     let trackStartingHour = parseInt(config.startingHour)
-    // track the hour the schedule starts at
 
+    // track the hour the schedule starts at
     let trackExistingHour = ''
 
     // track the minutes depending on activity Duration
@@ -111,47 +110,51 @@ const reassembleSchedule = (matrix) => {
 // console.log('input:\n', string)
 // console.log('\n\noutput:\n', reassembleSchedule())
 
-const handleNoInputError = () => {
-    scheduleInputEl.text('paste markdown class schedule here')
+const handleNoInputError = (str) => {
+    scheduleInputEl.val(str)
     scheduleOutputEl.text('')
 }
-const resetCopyButton = () => copyOutputBtn.text('copy')
+const resetCopyButton = () => {
+    copyOutputBtn.text('Copy')
 
+}
+const enableOutputElements = () => {
+    scheduleOutputEl.removeAttr('disabled')
+    copyOutputBtn.removeAttr('disabled')
+}
+const daySelected = (str) => (selectEl.val() === str) ? true : false
 
 const handleConvertSchedule = (e) => {
-    e.preventDefault();
+    e.preventDefault()
+
     resetCopyButton()
     const inputString = scheduleInputEl.val().trim()
-    if (!inputString) {
-        handleNoInputError()
-        return
-    }
-    const timeInputArr = timeInputEl.val().split(':')
-    const studentDoInput = $('#student-do').val()
-    const instructorReviewInput = $('#instructor-review').val()
-    const breakTime = $('input[name="break-length"]:checked').val();
+    if (!inputString) return handleNoInputError('paste class schedule here')
 
-    let hour = timeInputArr[0]
-    let min = timeInputArr[1]
+    const studentDoAdjustment = 5
+    const instructorReviewAdjustment = 2
+    const breakTime = (daySelected('saturday') ? 40 : 15)
+
+    let hour = (daySelected('saturday')) ? 10 : 6
+    let min = (daySelected('saturday')) ? 00 : 30
     let amPm = 'AM'
-    if (parseInt(hour) >= 12) {
+    if (hour >= 12) {
         amPm = 'PM'
-        hour = hour - 12 === 0 ? '12' : `${hour - 12}`
+        hour = (hour - 12 === 0) ? '12' : `${hour - 12}`
     }
     const config = {
-        startingHour: hour,
-        startingMinute: min,
+        startingHour: +hour,
+        startingMinute: +min,
         startingAmPm: amPm,
         adjustTime: {
-            studentDo: parseInt(studentDoInput),
-            instructorReview: parseInt(instructorReviewInput),
-            break: parseInt(breakTime)
-        },
+            studentDo: studentDoAdjustment,
+            instructorReview: instructorReviewAdjustment,
+            break: breakTime
+        }
     }
 
-    // convertStartTime(startingHour, startingMinute, startingAmPm)
     const convertedMatrix = convertStartTime(inputString, config)
-
+    enableOutputElements()
     scheduleOutputEl.text(reassembleSchedule(convertedMatrix))
 }
 
@@ -161,10 +164,11 @@ const copyToClipboard = async () => {
         await navigator.clipboard.writeText(scheduleOutputEl.val().trim())
         copyOutputBtn.text('copied!')
     } catch (error) {
-        console.error(errror)
+        console.error(error)
     }
 }
 
+scheduleInputEl.on('click', () => $('label[for=schedule-input]').text('input:'))
 formEl.on('submit', handleConvertSchedule)
 clearInputBtn.click(clearInputText)
 copyOutputBtn.click(copyToClipboard)
@@ -193,8 +197,7 @@ const init = () => {
 | 9:30PM | 18  | END                               | 0:00     |
 `
 
-    scheduleInputEl.val(exampleString.trim());
-    timeInputEl.val('10:00');
+    scheduleInputEl.val(exampleString.trim())
     $('h1').text(docTitle.text())
 }
 init()
