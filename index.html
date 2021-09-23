@@ -15,23 +15,20 @@
     <main class="h-100 container-fluid">
 
         <h1 class="text-end border-bottom my-4"></h1>
-
         <form class="d-flex justify-content-end">
-
             <select class=" d-flexform-select me-3 p-2" aria-label="Default select example">
-                <option selected>Select</option>
-                <option value="1">Weekday</option>
-                <option value="2">Saturday</option>
+                <option value="weekday">Weekday</option>
+                <option value="saturday" selected>Saturday</option>
             </select>
-            <button type="submit" class="btn btn-info">convert</button>
+            <button type="submit" class="btn btn-info">Convert</button>
         </form>
 
         <div class="row d-flex justify-content-evenly align-items-center">
 
             <div class="col-lg-6 col-md-12 position-relative">
-                <label class="form-label" for="schedule-input">input:</label>
+                <label class="form-label" for="schedule-input">input:(example)</label>
                 <button class="btn btn-warning position-absolute bottom-0 end-0 me-3 mb-1"
-                    id="clear-input-btn">clear</button>
+                    id="clear-input-btn">Clear</button>
                 <textarea class="form-control font-monospace overflow-auto" id="schedule-input"
                     aria-label="With textarea"></textarea>
             </div>
@@ -39,7 +36,7 @@
             <div class="col-lg-6 col-md-12 position-relative">
                 <label class="form-label" for="schedule-output">output:</label>
                 <button class="btn btn-success position-absolute bottom-0 end-0 me-3 mb-1" id="copy-output-btn"
-                    disabled>copy</button>
+                    disabled>Copy</button>
                 <textarea class="form-control font-monospace overflow-auto" id="schedule-output"
                     aria-label="With textarea" disabled></textarea>
             </div>
