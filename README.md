@@ -27,7 +27,7 @@
 | 9:15PM | 17  | Instructor Review: Selectors      | 0:15     |
 | 9:30PM | 18  | END                               | 0:00     |
 ```
-2. Modify the 'Adjustments' inputs if needed and click the 'convert' button.
+2. Select Weekday or Saturday & click Convert.
 3. Verify the updated times are correct and enjoy.
 
 -- Thanks!
