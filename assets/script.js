@@ -78,7 +78,6 @@ const convertStartTime = (string, config) => {
         // save the existing number when it is found
         if (!trackExistingHour && isAnHour) trackExistingHour = isAnHour
 
-
         // target expected index position to modify time
         if (trackExistingHour && isAnHour) currentLineArr[1] = updateScheduleTime(currentLinesTimeArr)
 
@@ -94,21 +93,18 @@ const convertStartTime = (string, config) => {
 
         // re-assemble the line
         currentLineArr.join('|')
-
     }
     return matrix
 }
 
 const reassembleSchedule = (matrix) => {
-    // adjust table formatting
+    // adjust table ouput formatting
     matrix[0][1] = ' Start   '
     matrix[1][1] = ' ------- '
     matrix[1][4] = ' -------  '
     const updated = matrix.map(arr => arr.join('|').trim())
     return updated.join('\n')
 }
-// console.log('input:\n', string)
-// console.log('\n\noutput:\n', reassembleSchedule())
 
 const handleNoInputError = (str) => {
     scheduleInputEl.val(str)
@@ -116,23 +112,21 @@ const handleNoInputError = (str) => {
 }
 const resetCopyButton = () => {
     copyOutputBtn.text('Copy')
-
 }
 const enableOutputElements = () => {
     scheduleOutputEl.removeAttr('disabled')
     copyOutputBtn.removeAttr('disabled')
 }
 const daySelected = (str) => (selectEl.val() === str) ? true : false
-
 const handleConvertSchedule = (e) => {
     e.preventDefault()
-
     resetCopyButton()
+
     const inputString = scheduleInputEl.val().trim()
     if (!inputString) return handleNoInputError('paste class schedule here')
 
-    const studentDoAdjustment = 5
-    const instructorReviewAdjustment = 2
+    const studentDoAdjustment = (daySelected('saturday')) ? 5 : 0
+    const instructorReviewAdjustment = (daySelected('saturday')) ? 2 : 0
     const breakTime = (daySelected('saturday') ? 40 : 15)
 
     let hour = (daySelected('saturday')) ? 10 : 6
